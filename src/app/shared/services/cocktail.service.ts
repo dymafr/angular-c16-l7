@@ -26,17 +26,20 @@ export class CocktailService {
       );
   }
 
-  public editCocktail(editedCocktail: Cocktail): void {
-    const value = this.cocktails$.value;
-    this.cocktails$.next(
-      value.map((cocktail: Cocktail) => {
-        if (cocktail.name === editedCocktail.name) {
-          return editedCocktail;
-        } else {
-          return cocktail;
-        }
-      })
-    );
+  public editCocktail(
+    cocktailId: string,
+    editedCocktail: Cocktail
+  ): Observable<Cocktail> {
+    return this.http
+      .patch<Cocktail>(
+        `https://restapi.fr/api/cocktails/${cocktailId}`,
+        editedCocktail
+      )
+      .pipe(
+        tap((savedCocktail: Cocktail) => {
+          this.cocktails$.next([...this.cocktails$.value, savedCocktail]);
+        })
+      );
   }
 
   public fetchCocktails(): Observable<Cocktail[]> {
