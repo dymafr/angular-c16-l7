@@ -28,9 +28,15 @@ export class CocktailFormComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       const index = paramMap.get("index");
       if (index !== null) {
-        // this.cocktail = this.cocktailService.getCocktail(Number(index)); fix leçon suivante !
+        this.cocktailService
+          .getCocktail(Number(index))
+          .subscribe((cocktail: Cocktail) => {
+            this.cocktail = cocktail;
+            this.initForm(this.cocktail);
+          });
+      } else {
+        this.initForm();
       }
-      this.initForm(this.cocktail);
     });
   }
 
@@ -66,7 +72,7 @@ export class CocktailFormComponent implements OnInit {
     if (this.cocktail) {
       this.cocktailService.editCocktail(this.cocktailForm.value);
     } else {
-      this.cocktailService.addCocktail(this.cocktailForm.value);
+      this.cocktailService.addCocktail(this.cocktailForm.value).subscribe();
     }
     this.router.navigate([".."], { relativeTo: this.activatedRoute });
   }

@@ -17,10 +17,13 @@ export class CocktailService {
   }
 
   public addCocktail(cocktail: Cocktail): Observable<Cocktail> {
-    return this.http.post<Cocktail>(
-      "https://restapi.fr/api/cocktails",
-      cocktail
-    );
+    return this.http
+      .post<Cocktail>("https://restapi.fr/api/cocktails", cocktail)
+      .pipe(
+        tap((cocktail: Cocktail) => {
+          this.cocktails$.next([...this.cocktails$.value, cocktail]);
+        })
+      );
   }
 
   public editCocktail(editedCocktail: Cocktail): void {
