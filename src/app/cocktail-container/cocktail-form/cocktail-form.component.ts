@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, ParamMap, Router } from "@angular/router";
+import { first } from "rxjs/operators";
 import { Cocktail } from "../../shared/interfaces/cocktail.interface";
 import { CocktailService } from "../../shared/services/cocktail.service";
 
@@ -30,6 +31,7 @@ export class CocktailFormComponent implements OnInit {
       if (index !== null) {
         this.cocktailService
           .getCocktail(Number(index))
+          .pipe(first())
           .subscribe((cocktail: Cocktail) => {
             console.log("form", new Date());
             this.cocktail = cocktail;

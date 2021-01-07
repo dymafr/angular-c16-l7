@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
-import { filter, first, map, tap } from "rxjs/operators";
+import { filter, map, tap } from "rxjs/operators";
 import { Cocktail } from "../interfaces/cocktail.interface";
 
 @Injectable({ providedIn: "root" })
