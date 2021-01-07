@@ -11,7 +11,6 @@ export class CocktailService {
   public getCocktail(index: number): Observable<Cocktail> {
     return this.cocktails$.pipe(
       filter((cocktails: Cocktail[]) => cocktails != null),
-      first(),
       map((cocktails: Cocktail[]) => cocktails[index])
     );
   }
@@ -37,7 +36,15 @@ export class CocktailService {
       )
       .pipe(
         tap((savedCocktail: Cocktail) => {
-          this.cocktails$.next([...this.cocktails$.value, savedCocktail]);
+          this.cocktails$.next(
+            this.cocktails$.value.map((cocktail: Cocktail) => {
+              if (cocktail.name === savedCocktail.name) {
+                return editedCocktail;
+              } else {
+                return cocktail;
+              }
+            })
+          );
         })
       );
   }
