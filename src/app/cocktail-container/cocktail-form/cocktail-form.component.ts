@@ -70,7 +70,9 @@ export class CocktailFormComponent implements OnInit {
 
   public submit(): void {
     if (this.cocktail) {
-      this.cocktailService.editCocktail(this.cocktailForm.value);
+      this.cocktailService
+        .editCocktail(this.cocktail._id, this.cocktailForm.value)
+        .subscribe();
     } else {
       this.cocktailService.addCocktail(this.cocktailForm.value).subscribe();
     }
