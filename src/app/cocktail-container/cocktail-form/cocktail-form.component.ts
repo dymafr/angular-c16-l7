@@ -33,7 +33,6 @@ export class CocktailFormComponent implements OnInit {
           .getCocktail(Number(index))
           .pipe(first())
           .subscribe((cocktail: Cocktail) => {
-            console.log("form", new Date());
             this.cocktail = cocktail;
             this.initForm(this.cocktail);
           });

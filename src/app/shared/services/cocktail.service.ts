@@ -39,7 +39,7 @@ export class CocktailService {
           this.cocktails$.next(
             this.cocktails$.value.map((cocktail: Cocktail) => {
               if (cocktail.name === savedCocktail.name) {
-                return editedCocktail;
+                return savedCocktail;
               } else {
                 return cocktail;
               }
