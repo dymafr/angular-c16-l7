@@ -16,9 +16,11 @@ export class CocktailService {
     );
   }
 
-  public addCocktail(cocktail: Cocktail): void {
-    const value = this.cocktails$.value;
-    this.cocktails$.next([...value, cocktail]);
+  public addCocktail(cocktail: Cocktail): Observable<Cocktail> {
+    return this.http.post<Cocktail>(
+      "https://restapi.fr/api/cocktails",
+      cocktail
+    );
   }
 
   public editCocktail(editedCocktail: Cocktail): void {
