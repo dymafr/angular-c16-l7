@@ -31,6 +31,7 @@ export class CocktailFormComponent implements OnInit {
         this.cocktailService
           .getCocktail(Number(index))
           .subscribe((cocktail: Cocktail) => {
+            console.log("form", new Date());
             this.cocktail = cocktail;
             this.initForm(this.cocktail);
           });

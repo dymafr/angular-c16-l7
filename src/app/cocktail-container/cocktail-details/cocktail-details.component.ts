@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, ParamMap } from "@angular/router";
+import { Subscription } from "rxjs";
 import { Cocktail } from "../../shared/interfaces/cocktail.interface";
 import { CocktailService } from "../../shared/services/cocktail.service";
 import { PanierService } from "../../shared/services/panier.service";
@@ -11,6 +12,7 @@ import { PanierService } from "../../shared/services/panier.service";
 })
 export class CocktailDetailsComponent implements OnInit {
   public cocktail: Cocktail;
+  public subscription: Subscription;
 
   constructor(
     private cocktailService: CocktailService,
@@ -20,7 +22,10 @@ export class CocktailDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
-      this.cocktailService
+      if (this.subscription) {
+        this.subscription.unsubscribe();
+      }
+      this.subscription = this.cocktailService
         .getCocktail(+paramMap.get("index"))
         .subscribe((cocktail: Cocktail) => {
           this.cocktail = cocktail;
@@ -30,5 +35,9 @@ export class CocktailDetailsComponent implements OnInit {
 
   public addToPanier() {
     this.panierService.addPanier(this.cocktail.ingredients);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
