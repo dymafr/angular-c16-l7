@@ -12,7 +12,7 @@ import { first } from 'rxjs';
 })
 export class CocktailFormComponent implements OnInit {
   public cocktail?: Cocktail;
-  public cocktailForm!: FormGroup;
+  public cocktailForm: FormGroup = this.initForm();
 
   public get ingredients() {
     return this.cocktailForm.get('ingredients') as FormArray;
@@ -34,10 +34,10 @@ export class CocktailFormComponent implements OnInit {
           .pipe(first())
           .subscribe((cocktail: Cocktail) => {
             this.cocktail = cocktail;
-            this.initForm(this.cocktail);
+            this.cocktailForm = this.initForm(this.cocktail);
           });
       } else {
-        this.initForm();
+        this.cocktailForm = this.initForm();
       }
     });
   }
