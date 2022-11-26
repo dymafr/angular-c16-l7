@@ -12,7 +12,7 @@ import { first } from 'rxjs';
 })
 export class CocktailFormComponent implements OnInit {
   public cocktail?: Cocktail;
-  public cocktailForm: FormGroup = this.initForm();
+  public cocktailForm!: FormGroup;
 
   public get ingredients() {
     return this.cocktailForm.get('ingredients') as FormArray;
@@ -45,6 +45,7 @@ export class CocktailFormComponent implements OnInit {
   private initForm(
     cocktail: Cocktail = { name: '', description: '', img: '', ingredients: [] }
   ): FormGroup {
+    console.log('HERE');
     return this.fb.group({
       name: [cocktail.name, Validators.required],
       img: [cocktail.img, Validators.required],
