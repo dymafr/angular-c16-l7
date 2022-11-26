@@ -31,7 +31,7 @@ export class CocktailFormComponent implements OnInit {
       if (index !== null) {
         this.cocktailService
           .getCocktail(Number(index))
-          .pipe(first())
+          .pipe(first((x) => !!x))
           .subscribe((cocktail: Cocktail) => {
             this.cocktail = cocktail;
             this.cocktailForm = this.initForm(this.cocktail);
@@ -45,7 +45,6 @@ export class CocktailFormComponent implements OnInit {
   private initForm(
     cocktail: Cocktail = { name: '', description: '', img: '', ingredients: [] }
   ): FormGroup {
-    console.log('HERE');
     return this.fb.group({
       name: [cocktail.name, Validators.required],
       img: [cocktail.img, Validators.required],
